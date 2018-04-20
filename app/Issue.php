@@ -63,7 +63,7 @@
         
         $fq = time();
         $key = "".$masterUID.$fq;
-        $formID = Tools::create_guid($key);
+        $formID = Particle::timeFromParticle(Particle::generateParticle($key));
         $flag = 0;
         $mapTool = new tencentMapTools();
 
@@ -96,6 +96,11 @@
         //基本表插入
 
         $result = $database->insert('form_basic',$datas);
+        if($result == false){
+            $info = new IssueErrorInfo2("服务器错误 请重新发布订单");
+            Tools::infoBack($info);
+            return; 
+        }
 
         //插入待服务列表
         $geohash = new Geohash();
