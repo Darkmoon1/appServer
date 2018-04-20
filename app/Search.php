@@ -38,7 +38,8 @@
         $result = $database->select('waiting_server','form_id',array(
             "AND"=>array(
                 'start_geohash[~]'=>$like_geohash."%",
-                'cf[<>]'=>array($cf-1800,$cf+1800)
+                'cf[<>]'=>array($cf-1800,$cf+1800),
+                'masterUID[!]'=>$_SESSION['UID']
             )
         ));
         if(empty($result)){

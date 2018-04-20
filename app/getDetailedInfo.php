@@ -10,6 +10,7 @@
     else{
         $info = new SearchErrorInfo1();
         Tools::infoBack($info);
+        return;
     }
 
     function getDetailedInfo(){
@@ -27,8 +28,14 @@
             $info = new SearchErrorInfo2("订单不存在");
             Tools::infoBack($info); 
         }else{
-            $info = new SearchErrorInfo0($result[0]);
-            Tools::infoBack($info);
+            if($result[0]['masterUID']==$_SESSION['UID']||$_SESSION['UID']==$result[0]['serverUID']){
+                $info = new SearchErrorInfo0($result[0]);
+                Tools::infoBack($info);
+            }else{
+                $info = new SearchErrorInfo2("用户没有该权限");
+                Tools::infoBack($info);
+                return;
+            }
         }
     }
 
