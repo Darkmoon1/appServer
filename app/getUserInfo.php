@@ -25,9 +25,9 @@
         // $UID = 'yhy';
         $databaseTools = new databaseTools();
         $database = $databaseTools->databaseInit();
-        $columns = array('UID','car_number','phone_number','nick_name','contribution','money','regist_time');
+        $columns = array('UID','car_number','phone_number','nick_name','contribution','money','regist_time','abs_contribution');
         $where = array('UID'=>$UID);
-        $result = $database->select('user_basic',$columns,$where);
+        $result = $database->select('user_basic',$columns, $where);
         if(empty($result)){
             $info = new getUIErrorInfo2("没有该用户");
             Tools::infoBack($info);

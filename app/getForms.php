@@ -21,13 +21,16 @@
         $databaseTools = new databaseTools();
         $database = $databaseTools->databaseInit();
 
-        $result = $database->select('form_basic',array('formID','qdName','zdName','js','flag','distance'),array(
+        $result = $database->select('form_basic',array('formID','qdName','zdName','js','flag','distance', 'cf'),array(
             "OR"=>array(
                 'masterUID'=>$UID,
                 'serverUID'=>$UID
+            ),
+            "ORDER"=>array(
+                "flag" => [4, 1, 0, 2, 3, 5],
+                "cf" => "ASC"
             )
         ));
-        //根据fq时间倒序返回
         
         $info = new SearchErrorInfo0($result);
         Tools::infoBack($info);

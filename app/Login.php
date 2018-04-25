@@ -23,6 +23,9 @@
     else if($action==2&&isset($_POST['code'])){
         regist($_POST['code']);
     }
+    else if($action==3){
+        checkSession();
+    }
     else{
         $info = new loginErrorInfo1("提交参数有错误");
         Tools::infoBack($info);
@@ -146,7 +149,25 @@
             $info = new loginErrorInfo1("用户已经存在");
             Tools::infoBack($info);
         }
+    }
 
-
+    function checkSession()
+    {
+        $session = $_POST['session'];
+        session_id($session);
+        session_start();
+        if(isset($_SESSION['UID'])) {
+            $info = json_encode(array(
+                "dm_error"=>0,
+                "error_msg"=>'操作成功'
+            ));
+        }
+        else {
+            $info = json_encode(array(
+                "dm_error"=>1,
+                "error_msg"=>'session无效'
+            ));
+        }
+        echo $info;
     }
 ?>

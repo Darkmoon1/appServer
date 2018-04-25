@@ -6,6 +6,7 @@
     session_id($session);
     session_start();
 
+    //未校验用户
     if(isset($_SESSION['UID'])){
         if($action == 1){
             deal();
@@ -97,11 +98,22 @@
         $time = time();
         $UID = $_SESSION['UID'];
 
-        // $UID = 'yhy';
-
         $databaseTools = new databaseTools();
         $database = $databaseTools->databaseInit();
-        $result = $database->insert('communication',array(
+
+        $result = $database->select('form_basic',array('flag', 'masterUID', 'serverUID'),array('formID'=>$formID));
+
+        if(empty($result) || $result[0]['flag'] != 1){
+            $info = new DealErrorInfo2("已结束订单无法继续交流");
+            Tools::infoBack($info);
+            return;
+        } else if($result[0]['masterUID'] != $UID && $result[0]['serverUID'] != $UID) {
+            $info = new DealErrorInfo2("您无权操作");
+            Tools::infoBack($info);
+            return;
+        }
+
+        $database->insert('communication',array(
                 'comID'=>$formID.$time,
                 'form_id'=>$formID,
                 'AUID'=>$UID,
@@ -117,14 +129,28 @@
     function receiveInfo(){
         $formID = $_POST['formID'];
         $time = $_POST['lastTimeStamp'];
-        // $UID = $_SESSION['UID'];
+        $UID = $_SESSION['UID'];
 
         $databaseTools = new databaseTools();
         $database = $databaseTools->databaseInit();
-        $result = $database->select('communication',array('AUID','content','time_stamp'),array("AND"=>array(
+
+        $result = $database->select('form_basic',array('flag', 'masterUID', 'serverUID'),array('formID'=>$formID));
+        if(empty($result)){
+            $info = new DealErrorInfo2("该订单不存在");
+            Tools::infoBack($info);
+            return;
+        } else if($result[0]['masterUID'] != $UID && $result[0]['serverUID'] != $UID) {
+            $info = new DealErrorInfo2("您无权操作");
+            Tools::infoBack($info);
+            return;
+        }
+
+        $result = $database->select('communication',array('AUID(UID)','content','time_stamp'),array(
+            "AND"=>array(
             'form_id'=>$formID,
-            'time_stamp[>=]'=>$time
-        )));
+            'time_stamp[>]'=>$time),
+            "ORDER"=>'time_stamp'
+        ));
         
         $info = new DealErrorInfo0($result);
         Tools::infoBack($info);
