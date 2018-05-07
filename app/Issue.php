@@ -140,16 +140,11 @@
         $databaseTools = new databaseTools();
         $database = $databaseTools->databaseInit();
 
-<<<<<<< HEAD
         $result = $database->select('form_basic',array('formID', 'flag', 'masterUID', 'serverUID'),array('formID'=>$formID));
-=======
-        $result = $database->select('form_basic',array('formID', 'flag'),array('formID'=>$formID));
->>>>>>> 9878ba688244eabfd2f2eaf75385273fafcca82c
         if(empty($result)){
             $info = new IssueErrorInfo2("该订单不存在或已经结束");
             Tools::infoBack($info); 
         }else{
-<<<<<<< HEAD
 			$result = $result[0];
             if($result['masterUID']!=$_SESSION['UID']&&$_SESSION['UID']!=$result['serverUID']){
                 $info = new errorInfo("该用户没有权限");
@@ -157,9 +152,6 @@
                 return;
             }
             if ($result['flag']==0)
-=======
-            if ($result[0]['flag']==0)
->>>>>>> 9878ba688244eabfd2f2eaf75385273fafcca82c
             {
                 //从等待列表中删除
                 $result = $database->delete('waiting_server',array('form_id'=>$formID));

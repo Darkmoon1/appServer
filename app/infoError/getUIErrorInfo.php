@@ -11,7 +11,6 @@
         public $car_number;
         public $nickname;
         public $contribution;
-        public $abscontribution;
         public $money;
         public $registTime;
         public function getUIErrorInfo0($data){
@@ -23,7 +22,6 @@
             $this->car_number = $data["car_number"];
             $this->nickname = $data["nick_name"];
             $this->contribution = $data["contribution"];
-            $this->abscontribution = $data["abs_contribution"];
             $this->money = $data["money"];
             $this->registTime = $data["regist_time"];
         }
