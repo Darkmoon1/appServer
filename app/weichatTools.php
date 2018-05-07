@@ -14,7 +14,11 @@
             $this->grant_type = 'authorization_code';
             $this->secret = '921f1328a46fd694d0ff228224301d6b';
             $this->loginAPI = "https://api.weixin.qq.com/sns/jscode2session";
+<<<<<<< HEAD
             $this->template_id = '30pSR7S7OBBH1GW9F0e4t2A-Q_6xEIWKSgzY4aKkVDw';
+=======
+            $this->$template_id = '30pSR7S7OBBH1GW9F0e4t2A-Q_6xEIWKSgzY4aKkVDw';
+>>>>>>> 9878ba688244eabfd2f2eaf75385273fafcca82c
         }
 
 
@@ -54,12 +58,20 @@
 
             $datas = array(
                 'touser'=>$uid,
+<<<<<<< HEAD
                 'template_id'=>$this->template_id,
+=======
+                'template_id'=>$this->$template_id,
+>>>>>>> 9878ba688244eabfd2f2eaf75385273fafcca82c
                 'page'=>'pages/orderDetail/orderDetail?formID='.$formId,
                 'form_id'=>$wxformId,
                 'data'=>$data
             );
+<<<<<<< HEAD
             $result = parent::http_request('https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token='.$this->access_token,json_encode($datas));
+=======
+            $result = parent::http_request('https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token='.$this->access_token,$datas);
+>>>>>>> 9878ba688244eabfd2f2eaf75385273fafcca82c
             return $result;
         }
     }

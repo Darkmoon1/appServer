@@ -93,6 +93,47 @@
                 }
 				$info = new DealErrorInfo0("");
                 Tools::infoBack($info); 
+
+                $form = $database->select('form_basic',array(
+                    '[>]user_basic'=>array('serverUID'=>'UID')
+                ),array('car_number','nick_name','phone_number','qdName','zdName','bz','cf','masterUID','wxformId'),array(
+                    'formID'=>$formID
+                ));
+
+                $weichatTools = new weichatTools();
+                $weichatTools->updateAccessToken();
+                $data = array(
+                    'keyword1'=>array(
+                        'value'=>,$form['car_number']
+                    ),
+                    'keyword2'=>array(
+                        'value'=>,$form['nick_name']
+                    ),
+                    'keyword3'=>array(
+                        'value'=>,$jd
+                    ),
+                    'keyword4'=>array(
+                        'value'=>,$form['phone_number']
+                    ),
+                    'keyword5'=>array(
+                        'value'=>,$form['qdName'].'>>'.$form['zdName']
+                    ),
+                    'keyword6'=>array(
+                        'value'=>,$form['bz']
+                    ),
+                    'keyword7'=>array(
+                        'value'=>,$form['cf']
+                    ),
+                    'keyword8'=>array(
+                        'value'=>,$formID
+                    ),
+                );
+                $result = $weichatTools->sendMessage($form['masterUID'],$data,$formID,$form['wxformId']);
+                if($result['errcode']==0){
+                    return;
+                }else{
+                    
+                }
             }
             else{
                 $info = new DealErrorInfo2("服务器错误");
