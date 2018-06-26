@@ -50,7 +50,7 @@
             foreach($result as $var){
                 array_push($UID,$var);
             }
-            $result = $database->select('form_basic',array('formID','qdName','zdName','cf','type','distance'),array(
+            $result = $database->select('form_basic',array('formID','qdName','zdName','start_gps','end_gps','cf','type','distance'),array(
                 'formID'=>$UID
             ));
 

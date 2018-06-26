@@ -1,4 +1,5 @@
 <?php
+    require_once  'Tools.php';
     class weichatTools extends Tools{
         public $appid;
         public $secret;
@@ -42,6 +43,7 @@
         }
 
         public function sendMessage($uid, $data, $formId, $wxformId){
+
             $i = 0;
             while($this->exptime < time() && $i<10){
                 $i = $i + 1;
@@ -63,4 +65,34 @@
             return $result;
         }
     }
+/*
+$data = array(
+    'keyword1'=>array(
+        'value'=>'123'
+    ),
+    'keyword2'=>array(
+        'value'=>'wyc'
+    ),
+    'keyword3'=>array(
+        'value'=>'jd'
+    ),
+    'keyword4'=>array(
+        'value'=>'123456'
+    ),
+    'keyword5'=>array(
+        'value'=>'aaaa'
+    ),
+    'keyword6'=>array(
+        'value'=>'bnbbbb'
+    ),
+    'keyword7'=>array(
+        'value'=>'dddddd'
+    ),
+    'keyword8'=>array(
+        'value'=>'384107096365'
+    ),
+);
+$wechatTool = new weichatTools();
+$wechatTool->sendMessage('ooi7b4ksZH8cDAkCypoj78YEDy6U', $data, '384107096365', '1525690340307');
+*/
 ?>

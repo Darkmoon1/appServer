@@ -55,6 +55,8 @@
                     'formID'=>$formID
                 ));
 
+                $form = $form[0];
+
                 $weichatTools = new weichatTools();
                 $weichatTools->updateAccessToken();
                 $data = array(
@@ -83,14 +85,8 @@
                         'value'=>$formID
                     ),
                 );
-                $result = $weichatTools->sendMessage($form['masterUID'],$data,$formID,$form['wxformId']);
-                if($result['errcode']==0){
-                    $info = new DealErrorInfo0("");
-					Tools::infoBack($info); 
-                }else{
-					$info = new DealErrorInfo2(json_encode($result));
-                    Tools::infoBack($info); 
-                }
+                $weichatTools->sendMessage($form['masterUID'],$data,$formID,$form['wxformId']);
+
 				$info = new DealErrorInfo0("");
                 Tools::infoBack($info); 
             }

@@ -77,13 +77,13 @@
 
         $result = $mapTool->getDistance($qd,$zd);
         $result = json_decode($result,true);
-        if($result['status']!=0){
-            $info = new IssueErrorInfo2("腾讯api服务错误");
+        if($result['status']!=1){
+            $info = new IssueErrorInfo2("高德api服务错误");
             Tools::infoBack($info);
             return;
         }
         //待查数据格式
-        $distance = $result['result']['elements'][0]['distance'] / 1000;
+        $distance = $result['results'][0]['distance'] + 0.0;
 
         // $distance = 1000.0;
         $datas = array(
